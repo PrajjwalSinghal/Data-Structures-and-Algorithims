@@ -136,16 +136,37 @@ unsigned doubly_linked_list::get_data(unsigned position) {
 // Get a set of values between position_from to position_to
 std::vector<unsigned> doubly_linked_list::get_set(unsigned position_from, unsigned position_to) {
 
+    int i,k=0;
+    std::vector <unsigned> values(position_to-position_from+1);
+    node *temp = head;
+    for(i=0;i<position_from;i++)
+        temp = temp->next;
+    while(i<=position_to)
+    {
+        values[k] = temp->data;
+        temp = temp->next;
+        i++;
+        k++;
+    }
+    return values;
 }
 
 // Add a value to the end of the list
 void doubly_linked_list::append(unsigned data) {
 
+    node *temp;
+    temp = new node(data);
+    temp->next = nullptr;
+    temp->prev = tail;
+    tail->next = temp;
+    tail = temp;
 }
 
 // Merge two lists together in place, placing the input list at the end of this list
 void doubly_linked_list::merge(doubly_linked_list rhs) {
 
+    this->tail->next = rhs.head;
+    rhs.head->prev = this->tail;
 }
 
 // Allow for the merging of two lists using the + operator.
