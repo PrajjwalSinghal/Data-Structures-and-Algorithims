@@ -119,7 +119,7 @@ unsigned doubly_linked_list::get_data(unsigned position) {
     unsigned return_value = 0;
     if( position>= size)
     {
-        std::cout<<"invalid size::";<<std::endl;
+        std::cout<<"invalid size::"<<std::endl;
     }
     else
     {
