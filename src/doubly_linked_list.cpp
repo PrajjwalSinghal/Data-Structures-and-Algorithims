@@ -34,32 +34,103 @@
 
 // Default constructor
 doubly_linked_list::doubly_linked_list() {
-
+    head->next = head->prev=tail->next=tail->prev = nullptr;
+    head->data=tail->data=0;
+    size = 0;
 }
 
 // Take in a vector of inputs and construct a doubly linked list from them
 doubly_linked_list::doubly_linked_list(std::vector<unsigned> values) {
-
+    size = 0;
+    int vector_size = values.size();
+    node *temp = head;
+    for(int i = 0;i<vector_size;i++)
+    {
+        temp = new node(values[i]);
+        temp->next = tail;
+        tail->prev = temp;
+        temp = tail;
+        size++;
+    }
 }
 
 // Copy constructor
 doubly_linked_list::doubly_linked_list(const doubly_linked_list& original) {
+
+    node *temp1=original.head;
+    head = tail = nullptr;
+    this->head->prev=this->head->next = this->tail->prev=this->tail->next = nullptr;
+    node *temp = head;
+    while(temp1)
+    {
+        temp = new node(temp1->data);
+        temp->next = tail;
+        tail->prev = temp;
+        temp = tail;
+        temp->next = nullptr;
+        temp1= temp1->next;
+        size++;
+    }
 
 }
 
 // Create doubly linked linked list with one input value
 doubly_linked_list::doubly_linked_list(unsigned input) {
 
+   if(is_empty())
+   {
+       tail = head = new node(input);
+       head->next = nullptr;
+       head->prev = nullptr;
+       size++;
+   }
+   else
+   {
+       node *temp;
+       temp = new node(input);
+       tail->next = temp;
+       temp->prev = tail;
+       tail = temp;
+       tail->next = nullptr;
+   }
+
+
+
+
 }
 
 // Default constructor
 doubly_linked_list::~doubly_linked_list() {
+    node *temp;
+    temp = head;
+    while(is_empty())
+    {
+        head = head->next;
+        delete temp;
+        temp = head;
+        size--;
+    }
 
 }
 
 // return the value inside of the node located at position
 unsigned doubly_linked_list::get_data(unsigned position) {
-    return 0;
+
+    unsigned return_value = 0;
+    if( position>= size)
+    {
+        std::cout<<"invalid size::";<<std::endl;
+    }
+    else
+    {
+        node *temp;
+        temp = head;
+        for(int i=0; i<position;i++)
+            temp = temp->next;
+        return_value = temp->data;
+    }
+
+    return return_value;
 }
 
 // Get a set of values between position_from to position_to
