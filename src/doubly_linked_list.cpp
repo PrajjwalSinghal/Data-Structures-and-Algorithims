@@ -170,17 +170,59 @@ void doubly_linked_list::merge(doubly_linked_list rhs) {
 }
 
 // Allow for the merging of two lists using the + operator.
-doubly_linked_list doubly_linked_list::operator+(const doubly_linked_list &rhs) const {
-//    return ;
+doubly_linked_list doubly_linked_list::operator+( doubly_linked_list &rhs)  {
+
+    std::vector<unsigned> values(this->get_size()+rhs.get_size());
+    node* temp = this->head;
+    int i=0;
+    while(temp)
+    {
+        values[i] = temp->data;
+        i++;
+        temp = temp->next;
+    }
+    temp = rhs.head;
+    while(temp)
+    {
+        values[i] = temp->data;
+        i++;
+        temp = temp->next;
+    }
+    doubly_linked_list result(values);
+    return result;
 }
 
 // Insert a node before the node located at position
 void doubly_linked_list::insert_before(unsigned position, unsigned data) {
 
+    if(position >= size)
+    {
+        std::cout<<"Wrong position entered";
+    }
+    else
+    {
+        node *temp = head;
+        for(int i=0;i<position-1;i++)
+            temp = temp->next;
+        node *temp1 = new node(data);
+        node *temp2 = temp->next;
+        temp1->prev = temp;
+        temp1->next = temp2;
+        temp2->prev = temp1;
+        temp->next = temp1;
+    }
 }
 
 // Insert a node after the node located at position
 void doubly_linked_list::insert_after(unsigned position, unsigned data) {
+
+        if(position == (size-1))
+            append(data);
+        else
+        {
+            position++;
+            insert_before(position,data);
+        }
 
 }
 

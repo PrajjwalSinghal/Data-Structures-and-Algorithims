@@ -34,7 +34,7 @@ public:
     void swap(unsigned position1, unsigned position2);
     void swap_set(unsigned position1_from, unsigned position1_to, unsigned position2_from, unsigned position2_to);
 
-    doubly_linked_list operator+(const doubly_linked_list& rhs )const;//returns list with *this appended to rhs does not alter *this or rhs
+    doubly_linked_list operator+( doubly_linked_list& rhs );//returns list with *this appended to rhs does not alter *this or rhs
     doubly_linked_list &operator=(const doubly_linked_list& RHS);
     doubly_linked_list &operator+=(const doubly_linked_list& RHS);
 
