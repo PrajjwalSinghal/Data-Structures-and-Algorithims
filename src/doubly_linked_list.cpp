@@ -236,28 +236,97 @@ void doubly_linked_list::remove(unsigned position) {
     temp_previous->next = temp_after;
     temp_after->prev = temp_previous;
     delete temp_remove_node;
-
+    size--;
 }
 
 // Split the list with the node being split on being included in the returned list
 doubly_linked_list doubly_linked_list::split_before(unsigned position) {
-//    return ;
+
+    node *temp = head;
+    std::vector <unsigned> values(position);
+    if(position>=size)
+        std::cout<<"Wrong size entered";
+    else
+    {
+        for(int i=0;i<position;i++)
+        {
+            values[i] = temp->data;
+            temp = temp->next;
+        }
+
+        doubly_linked_list result(values);
+        node *temp1 = temp;
+        temp = temp->next;
+        temp1->next = nullptr;
+        temp->prev = nullptr;
+        // temp1 = head;
+        // while(temp1)
+        //    remove(0);
+        head = temp;
+        size = size - result.get_size();
+        return result;
+    }
+
 }
 
 // Split the list with the node being split on being included in the retained list
 doubly_linked_list doubly_linked_list::split_after(unsigned position) {
-//    return ;
+    doubly_linked_list result = this->split_before(position-1);
+    return result;
 }
 
 // Create two lists, one starting at position_from and ending with position_to and return that list
 // Merge the beginning of the original list with the end of the original list and retain it
 doubly_linked_list doubly_linked_list::split_set(unsigned position_from, unsigned position_to) {
-//    return ;
+
+    int i,k=0;
+    std::vector <unsigned> values(position_to-position_from);
+    node *original_end_first;
+    node *original_end_second;
+    node *temp = head;
+    for(i=0;i<position_from;i++)
+        temp = temp->next;
+    original_end_first = temp->prev;
+    while(i<position_to)
+    {
+        values[k] = temp->data;
+        k++;
+        i++;
+        temp = temp->next;
+    }
+    doubly_linked_list result(values);
+    original_end_second = temp->next;
+    original_end_first->next = original_end_second;
+    original_end_second->prev = original_end_first;
+    return result;
 }
 
 // Swap two nodes in the list. USE POINTERS. Do not just swap the values!
 void doubly_linked_list::swap(unsigned position1, unsigned position2) {
 
+    node *temp;
+    node *temp_position1=head;
+    node *temp_position2=head;
+    node *before_position1;
+    node *after_position1;
+    node *after_position2;
+    node *before_position2;
+    for(int i=0;i<position1;i++)
+        temp_position1 = temp_position1->next;
+    before_position1 = temp->prev;
+    after_position1 = temp->next;
+    for(int i=0;i<position2;i++)
+        temp_position2 = temp_position2->next;
+    after_position2 = temp_position2->next;
+    before_position2 = temp_position2->prev;
+    temp_position2->prev = temp_position1->prev;
+    temp_position2->next = temp_position1->next;
+    before_position1->next = temp_position2;
+    after_position1->prev = temp_position2;
+    temp_position1->next = after_position2;
+    temp_position1->prev = before_position2;
+    after_position2->prev = temp_position1;
+    before_position2->next = temp_position1;
 }
 
 // Swap two sets of cards. The sets are inclusive. USE POINTERS!
@@ -268,6 +337,7 @@ void doubly_linked_list::swap_set(unsigned position1_from, unsigned position1_to
 
 // Overload operator=
 doubly_linked_list &doubly_linked_list::operator=(const doubly_linked_list &RHS) {
+    
 //    return <#initializer#>;
 }
 
