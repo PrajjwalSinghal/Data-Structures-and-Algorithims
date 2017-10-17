@@ -228,6 +228,14 @@ void doubly_linked_list::insert_after(unsigned position, unsigned data) {
 
 // Remove the node located at position from the linked list
 void doubly_linked_list::remove(unsigned position) {
+    node *temp_remove_node = head;
+    for(int i=0;i<position;i++)
+        temp_remove_node = temp_remove_node->next;
+    node *temp_previous = temp_remove_node->prev;
+    node *temp_after = temp_remove_node->next;
+    temp_previous->next = temp_after;
+    temp_after->prev = temp_previous;
+    delete temp_remove_node;
 
 }
 
