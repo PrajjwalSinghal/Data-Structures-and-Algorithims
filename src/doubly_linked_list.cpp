@@ -337,13 +337,36 @@ void doubly_linked_list::swap_set(unsigned position1_from, unsigned position1_to
 
 // Overload operator=
 doubly_linked_list &doubly_linked_list::operator=(const doubly_linked_list &RHS) {
-    
-//    return <#initializer#>;
+    std::vector <unsigned> values(RHS.size);
+    node *temp;
+    for(int i=0;temp;i++)
+    {
+        values[i] = temp->data;
+        temp = temp->next;
+    }
+    doubly_linked_list result(values);
+    return result;
 }
 
 // Append the rhs to the end of the this list
 doubly_linked_list &doubly_linked_list::operator+=(const doubly_linked_list &RHS) {
-//    return <#initializer#>;
+    std::vector <unsigned> values(this->size + RHS.size);
+    node *temp = this->head;
+    int i;
+    for(i=0;temp;i++)
+    {
+        values[i] = temp->data;
+        temp = temp->next;
+    }
+    temp = RHS.head;
+    while(temp)
+    {
+        values[i] = temp->data;
+        temp = temp->next;
+        i++;
+    }
+    doubly_linked_list result(values);
+        return result;
 }
 
 unsigned doubly_linked_list::get_size() {
