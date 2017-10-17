@@ -331,6 +331,38 @@ void doubly_linked_list::swap(unsigned position1, unsigned position2) {
 // Swap two sets of cards. The sets are inclusive. USE POINTERS!
 void doubly_linked_list::swap_set(unsigned position1_from, unsigned position1_to, unsigned position2_from,
                                   unsigned position2_to) {
+    int i;
+    node *temp_position1_from,*temp_position1_to,*temp_position1_from_before,*temp_position1_to_after;
+    node *temp_position2_from,*temp_position2_to,*temp_position2_from_before,*temp_position2_to_after;
+    temp_position1_from = head;
+    temp_position2_from = head;
+    for(i=0;i<position1_from;i++)
+        temp_position1_from = temp_position1_from->next;
+    temp_position1_to = temp_position1_from;
+    for(;i<position1_to;i++)
+        temp_position1_to = temp_position1_to->next;
+    temp_position1_from_before = temp_position1_from->prev;
+    temp_position1_to_after = temp_position1_to->next;
+
+    //********************************//
+
+    for(i=0;i<position2_from;i++)
+        temp_position2_from = temp_position2_from->next;
+    temp_position2_to = temp_position2_from;
+    for(;i<position2_to;i++)
+        temp_position2_to = temp_position2_to->next;
+    temp_position2_from_before = temp_position2_from->prev;
+    temp_position2_to_after = temp_position2_to->next;
+
+    temp_position2_from->prev = temp_position1_from_before;
+    temp_position1_from_before->next = temp_position2_from;
+    temp_position2_to->next = temp_position1_to_after;
+    temp_position1_to_after->prev = temp_position2_to;
+
+    temp_position1_from->prev = temp_position2_from_before;
+    temp_position2_from_before->next = temp_position1_from;
+    temp_position1_to->next = temp_position2_to_after;
+    temp_position2_to_after->prev = temp_position1_to;
 
 }
 
