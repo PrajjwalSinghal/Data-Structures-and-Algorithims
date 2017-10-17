@@ -338,14 +338,15 @@ void doubly_linked_list::swap_set(unsigned position1_from, unsigned position1_to
 // Overload operator=
 doubly_linked_list &doubly_linked_list::operator=(const doubly_linked_list &RHS) {
     std::vector <unsigned> values(RHS.size);
-    node *temp;
+    node *temp = RHS.head;
     for(int i=0;temp;i++)
     {
         values[i] = temp->data;
         temp = temp->next;
     }
     doubly_linked_list result(values);
-    return result;
+    this->head = result.head;
+    return *this;
 }
 
 // Append the rhs to the end of the this list
