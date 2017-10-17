@@ -304,7 +304,6 @@ doubly_linked_list doubly_linked_list::split_set(unsigned position_from, unsigne
 // Swap two nodes in the list. USE POINTERS. Do not just swap the values!
 void doubly_linked_list::swap(unsigned position1, unsigned position2) {
 
-    node *temp;
     node *temp_position1=head;
     node *temp_position2=head;
     node *before_position1;
@@ -313,8 +312,8 @@ void doubly_linked_list::swap(unsigned position1, unsigned position2) {
     node *before_position2;
     for(int i=0;i<position1;i++)
         temp_position1 = temp_position1->next;
-    before_position1 = temp->prev;
-    after_position1 = temp->next;
+    before_position1 = temp_position1->prev;
+    after_position1 = temp_position1->next;
     for(int i=0;i<position2;i++)
         temp_position2 = temp_position2->next;
     after_position2 = temp_position2->next;
