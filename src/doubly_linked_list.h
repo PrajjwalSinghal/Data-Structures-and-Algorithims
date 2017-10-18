@@ -37,7 +37,7 @@ public:
     doubly_linked_list operator+( doubly_linked_list& rhs );//returns list with *this appended to rhs does not alter *this or rhs
     doubly_linked_list &operator=(const doubly_linked_list& RHS);
     doubly_linked_list &operator+=(const doubly_linked_list& RHS);
-
+    void print();
 };
 
 

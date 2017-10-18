@@ -1,3 +1,4 @@
+
 #include "doubly_linked_list.h"
 /*
  * You will be writing all of the code for each of these functions.
@@ -34,9 +35,10 @@
 
 // Default constructor
 doubly_linked_list::doubly_linked_list() {
-    head->next = head->prev=tail->next=tail->prev = nullptr;
+    //head->next = head->prev=tail->next=tail->prev = nullptr;
     head = tail = nullptr;
-    head->data=tail->data=0;
+    //head->data=0;
+    //tail->data=0;
     size = 0;
 }
 
@@ -45,23 +47,22 @@ doubly_linked_list::doubly_linked_list(std::vector<unsigned> values) {
     size = 0;
     int vector_size = values.size();
     head = nullptr;
-    node *temp = head;
-
+    node *temp;
+    temp = head;
+    size++;
     temp = new node(values[0]);
-    temp->prev = nullptr;
-    temp->next = nullptr;
-    node *temp1 = temp;
+    node *temp1;
+    temp1 = temp;
+    head = temp;
     temp = temp->next;
-    temp->prev = temp1;
-
     for(int i = 1;i<vector_size;i++)
     {
         temp = new node(values[i]);
         temp->prev = temp1;
+        temp1->next = temp;
         temp1 = temp;
         temp->next = nullptr;
         temp = temp->next;
-
         size++;
     }
     tail = temp;
@@ -427,3 +428,18 @@ unsigned doubly_linked_list::get_size() {
 bool doubly_linked_list::is_empty() {
     return !size;
 }
+void doubly_linked_list :: print()
+{
+    node *temp;
+    temp = head;
+    while(temp)
+    {
+        cout<<temp->data<<" ";
+        temp = temp->next;
+    }
+}
+
+
+
+
+
