@@ -70,7 +70,7 @@ doubly_linked_list::doubly_linked_list(std::vector<unsigned> values) {
 
 // Copy constructor
 doubly_linked_list::doubly_linked_list(const doubly_linked_list& original) {
-
+    /*
     node *temp1=original.head;
     node* temp2 = nullptr;
     head = tail = nullptr;
@@ -94,6 +94,34 @@ doubly_linked_list::doubly_linked_list(const doubly_linked_list& original) {
         size++;
     }
     head->prev = nullptr;
+    tail = temp;
+    */
+    size = 0;
+    vector <unsigned> values(original.size);
+    int i=0;
+    node *temp;
+    temp = original.head;
+    while(temp)
+    {
+        values[i] = temp->data;
+        temp = temp->next;
+        i++;
+    }
+    temp = head;
+    temp = new node(values[0]);
+    head = temp;
+    size++;
+    i=1;
+    while(i<original.size)
+    {
+        node *temp_previous;
+        temp_previous = temp;
+        temp->next = new node(values[i]);
+        temp = temp->next;
+        temp->prev = temp_previous;
+        i++;
+        size++;
+    }
     tail = temp;
 }
 
