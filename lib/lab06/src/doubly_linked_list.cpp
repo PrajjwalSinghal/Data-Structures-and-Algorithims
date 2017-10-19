@@ -128,26 +128,8 @@ doubly_linked_list::doubly_linked_list(const doubly_linked_list& original) {
 // Create doubly linked linked list with one input value
 doubly_linked_list::doubly_linked_list(unsigned input) {
 
-    if(is_empty())
-    {
-        tail = head = new node(input);
-        head->next = nullptr;
-        head->prev = nullptr;
-        size++;
-    }
-    else
-    {
-        node *temp;
-        temp = new node(input);
-        tail->next = temp;
-        temp->prev = tail;
-        tail = temp;
-        tail->next = nullptr;
-    }
-
-
-
-
+    tail = head = new node(input);
+    size=1;
 }
 
 // Default constructor
