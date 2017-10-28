@@ -6,6 +6,8 @@ void insert_recursive(node *root,int value);
 node* search_recursive(node *root,int key);
 node* delete_recursive(node* root,int key);
 node* search_min_in_right_recursive(node* root);
+int level_recursive(node* root,int data);
+int print_recursive(node *root,int data);
 // Construct an empty tree
 tree::tree(){
     root = nullptr;
@@ -36,7 +38,7 @@ bool tree::remove(int key){
     }
     else
     {
-        delete_recursive(root,key);
+        root = delete_recursive(root,key);
         return true;
     }
 
@@ -44,12 +46,12 @@ bool tree::remove(int key){
 
 // What level is key on?
 int tree::level(int key){
-
+    return level_recursive(root,key);
 }
 
 // Print the path to the key, starting with root
 void tree::path_to(int key){
-
+    std::cout<<"Path:"<<print_recursive(root,key);
 }
 
 // Number of items in the tree
@@ -161,7 +163,7 @@ node* delete_recursive(node* root,int data)
             delete temp;
 
         }
-        //CASE 3 : Complicated
+        //CASE 3 : Two child
         else
         {
             node *temp;
@@ -181,4 +183,21 @@ node* search_min_in_right_recursive(node*root)
         root = search_min_in_right_recursive(root->left);
         return root;
     }
+}
+int level_recursive(node* root,int data)
+{
+    if(root->data == data)
+        return 0;
+    else if(data>root->data)        // What is node is not present
+        return (1+level_recursive(root->right,data));
+    else
+        return  (1+level_recursive(root->left,data));
+}
+int print_recursive(node *root,int data)
+{
+    if(data > root->data)
+        std::cout<<print_recursive(root->right,data);
+    else if(data < root->data)
+        std::cout<<print_recursive(root->left,data);
+    return root->data;
 }
