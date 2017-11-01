@@ -3,11 +3,15 @@
 void clear(node* to_clear);
 void node_print_gtl(node* to_print);
 void insert_recursive(node *root,int value);
-node* search_recursive(node *root,int key);
+node* get_node_recursive(node *root,int key);
 node* delete_recursive(node* root,int key);
 node* search_min_in_right_recursive(node* root);
 int level_recursive(node* root,int data);
 int print_recursive(node *root,int data);
+unsigned find_size_recursive(node *root);
+unsigned find_depth_recursive(node *root);
+bool in_tree_recursive(node *root,int key);
+void print_tree_recursive(node *root);
 // Construct an empty tree
 tree::tree(){
     root = nullptr;
@@ -56,27 +60,48 @@ void tree::path_to(int key){
 
 // Number of items in the tree
 unsigned tree::size(){
-
+    unsigned size_of_tree;
+    if(root== nullptr)
+        size_of_tree = 0;
+    else
+        size_of_tree = 1 + find_size_recursive(root->left) + find_size_recursive(root->right);
+    return size_of_tree;
 }
 
 // Calculate the depth of the tree, longest string of connections
 unsigned tree::depth(){
-
+    unsigned depth;
+    if(root==nullptr)
+        depth = 0;
+    else
+        depth = find_depth_recursive(root);
+    return depth;
 }
 
 // Determine whether the given key is in the tree
 bool tree::in_tree(int key){
+    if(in_tree_recursive(root,key))
+        return true;
+    else
+        return false;
 
 }
 
 // Return the number of times that value is in the tree
 int tree::get_frequency(int key){
-
+    node *temp;
+    temp = get_node_recursive(root,key);
+    return temp->frequency;
 }
 
 // Print the tree least to greatest, Include duplicates
 void tree::print(){
-
+    if(root == nullptr)
+        std::cout<<"Tree is empty!!";
+    else
+    {
+        print_tree_recursive(root);
+    }
 }
 
 void tree::print_gtl(){
@@ -112,23 +137,23 @@ void insert_recursive(node *root,int value)
     else
         ++root->frequency;
 }
-node* search_recursive(node *root,int key)
+node* get_node_recursive(node *root,int key)
 {
-
+    node *temp_root;
     if (key > root->data)
     {
         node *temp_root;
-        temp_root = search_recursive(root->right, key);
-        return temp_root;
+        temp_root = get_node_recursive(root->right, key);
     }
     else if (key < root->data)
     {
         node *temp_root;
-        temp_root = search_recursive(root->left, key);
-        return temp_root;
+        temp_root = get_node_recursive(root->left, key);
     }
     else
-        return root;
+        temp_root = root;
+
+    return temp_root;
 
 }
 node* delete_recursive(node* root,int data)
@@ -200,4 +225,56 @@ int print_recursive(node *root,int data)
     else if(data < root->data)
         std::cout<<print_recursive(root->left,data);
     return root->data;
+}
+unsigned find_size_recursive(node *root)
+{
+    unsigned size_of_tree;
+    if(root == nullptr)
+        size_of_tree = 0;
+    else
+        size_of_tree = find_size_recursive(root->left) + 1 + find_size_recursive(root->right);
+    return size_of_tree;
+
+}
+unsigned find_depth_recursive(node* root)
+{
+    unsigned depth;
+    if(root == nullptr)
+        depth = 0;
+    else
+    {
+        unsigned left_depth=0,right_depth=0;
+        left_depth = 1 + find_depth_recursive(root->left);
+        right_depth = 1 + find_depth_recursive(root->right);
+        if(left_depth>right_depth)
+            depth = left_depth;
+        else
+            depth = right_depth;
+    }
+    return depth;
+}
+bool in_tree_recursive(node *root,int key)
+{
+    bool key_found;
+    if(root->data == key)
+        key_found = true;
+    else if(root->right== nullptr&&root->left== nullptr)
+        key_found = false;
+    else if(key>root->data && root->right != nullptr)
+        key_found = in_tree_recursive(root->right,key);
+    else if(key<root->data && root->left != nullptr)
+        key_found = in_tree_recursive(root->left,key);
+    else
+        key_found = false;
+    return key_found;
+}
+void print_tree_recursive(node *root)
+{
+    if(root == nullptr)
+        return ;
+    print_tree_recursive(root->left);
+    for(int i=0;i<root->frequency;i++)
+        std::cout<<root->data<<":";
+    print_tree_recursive(root->right);
+
 }
