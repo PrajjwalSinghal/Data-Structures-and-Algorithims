@@ -32,18 +32,18 @@
  * merge frequently.
  */
 
-
-// Default constructor
-doubly_linked_list::doubly_linked_list() {
+namespace lab6 {
+    // Default constructor
+    doubly_linked_list::doubly_linked_list() {
     //head->next = head->prev=tail->next=tail->prev = nullptr;
     head = tail = nullptr;
     //head->data=0;
     //tail->data=0;
     size = 0;
-}
+    }
 
-// Take in a vector of inputs and construct a doubly linked list from them
-doubly_linked_list::doubly_linked_list(std::vector<unsigned> values) {
+    // Take in a vector of inputs and construct a doubly linked list from them
+    doubly_linked_list::doubly_linked_list(std::vector<unsigned> values) {
     size = 0;
     int vector_size = values.size();
     head = nullptr;
@@ -66,12 +66,12 @@ doubly_linked_list::doubly_linked_list(std::vector<unsigned> values) {
         size++;
     }
     tail = temp;
-}
+    }
 
 // Copy constructor
 doubly_linked_list::doubly_linked_list(const doubly_linked_list& original) {
-    /*
-    node *temp1=original.head;
+/*
+node *temp1=original.head;
     node* temp2 = nullptr;
     head = tail = nullptr;
 //    this->head->prev=this->head->next = this->tail->prev=this->tail->next = nullptr;
@@ -122,18 +122,16 @@ doubly_linked_list::doubly_linked_list(const doubly_linked_list& original) {
         i++;
         size++;
     }
-    tail = temp;
-}
+    tail = temp;}
 
-// Create doubly linked linked list with one input value
-doubly_linked_list::doubly_linked_list(unsigned input) {
+    // Create doubly linked linked list with one input value
+    doubly_linked_list::doubly_linked_list(unsigned input) {
 
-    tail = head = new node(input);
-    size=1;
-}
+tail = head = new node(input);
+    size=1;}
 
-// Default constructor
-doubly_linked_list::~doubly_linked_list() {
+    // Default constructor
+    doubly_linked_list::~doubly_linked_list() {
     node *temp;
     temp = head;
     while(is_empty())
@@ -144,13 +142,12 @@ doubly_linked_list::~doubly_linked_list() {
         size--;
     }
 
-}
+    }
 
 // return the value inside of the node located at position
 unsigned doubly_linked_list::get_data(unsigned position) {
-
     unsigned return_value = 0;
-    if( position>= size)
+if( position>= size)
     {
         std::cout<<"invalid size::"<<std::endl;
     }
@@ -163,13 +160,12 @@ unsigned doubly_linked_list::get_data(unsigned position) {
         return_value = temp->data;
     }
 
-    return return_value;
-}
+    return return_value;}
 
-// Get a set of values between position_from to position_to
-std::vector<unsigned> doubly_linked_list::get_set(unsigned position_from, unsigned position_to) {
+    // Get a set of values between position_from to position_to
+    std::vector<unsigned> doubly_linked_list::get_set(unsigned position_from, unsigned position_to) {
 
-    unsigned i,k=0;
+unsigned i,k=0;
     std::vector <unsigned> values(position_to-position_from+1);
     node *temp = head;
     for(i=0;i<position_from;i++)
@@ -181,29 +177,26 @@ std::vector<unsigned> doubly_linked_list::get_set(unsigned position_from, unsign
         i++;
         k++;
     }
-    return values;
-}
+    return values;}
 
-// Add a value to the end of the list
-void doubly_linked_list::append(unsigned data) {
+    // Add a value to the end of the list
+    void doubly_linked_list::append(unsigned data) {
 
-    node *temp;
+node *temp;
     temp = new node(data);
     temp->next = nullptr;
     temp->prev = tail;
     tail->next = temp;
-    tail = temp;
-}
+    tail = temp;}
 
-// Merge two lists together in place, placing the input list at the end of this list
-void doubly_linked_list::merge(doubly_linked_list rhs) {
+    // Merge two lists together in place, placing the input list at the end of this list
+    void doubly_linked_list::merge(doubly_linked_list rhs) {
 
-    this->tail->next = rhs.head;
-    rhs.head->prev = this->tail;
-}
+this->tail->next = rhs.head;
+    rhs.head->prev = this->tail;}
 
 // Allow for the merging of two lists using the + operator.
-doubly_linked_list doubly_linked_list::operator+( doubly_linked_list &rhs)  {
+doubly_linked_list doubly_linked_list::operator+( doubly_linked_list &rhs) {
 
     std::vector<unsigned> values(this->get_size()+rhs.get_size());
     node* temp = this->head;
@@ -222,14 +215,13 @@ doubly_linked_list doubly_linked_list::operator+( doubly_linked_list &rhs)  {
         temp = temp->next;
     }
     doubly_linked_list result(values);
-
     return result;
 }
 
-// Insert a node before the node located at position
-void doubly_linked_list::insert_before(unsigned position, unsigned data) {
+    // Insert a node before the node located at position
+    void doubly_linked_list::insert_before(unsigned position, unsigned data) {
 
-    if(position >= size)
+if(position >= size)
     {
         std::cout<<"Wrong position entered";
     }
@@ -244,24 +236,21 @@ void doubly_linked_list::insert_before(unsigned position, unsigned data) {
         temp1->next = temp2;
         temp2->prev = temp1;
         temp->next = temp1;
-    }
-}
+    }}
 
-// Insert a node after the node located at position
-void doubly_linked_list::insert_after(unsigned position, unsigned data) {
+    // Insert a node after the node located at position
+    void doubly_linked_list::insert_after(unsigned position, unsigned data) {
 
-    if(position == (size-1))
+if(position == (size-1))
         append(data);
     else
     {
         position++;
         insert_before(position,data);
-    }
+    }}
 
-}
-
-// Remove the node located at position from the linked list
-void doubly_linked_list::remove(unsigned position) {
+    // Remove the node located at position from the linked list
+    void doubly_linked_list::remove(unsigned position) {
     node *temp_remove_node = head;
     for(unsigned i=0;i<position;i++)
         temp_remove_node = temp_remove_node->next;
@@ -271,18 +260,16 @@ void doubly_linked_list::remove(unsigned position) {
     temp_after->prev = temp_previous;
     delete temp_remove_node;
     size--;
-}
+    }
 
 // Split the list with the node being split on being included in the returned list
 doubly_linked_list doubly_linked_list::split_before(unsigned position) {
-
-    node *temp = head;
+node *temp = head;
     std::vector <unsigned> values(position);
     if(position>=size)
     {
         std::cout<<"Wrong size entered";
-        doubly_linked_list result;
-        return result;
+        doubly_linked_list result;    return result;
     }
     else
     {
@@ -304,20 +291,17 @@ doubly_linked_list doubly_linked_list::split_before(unsigned position) {
         size = size - result.get_size();
         return result;
     }
-
 }
 
 // Split the list with the node being split on being included in the retained list
 doubly_linked_list doubly_linked_list::split_after(unsigned position) {
-    doubly_linked_list result = this->split_before(position-1);
-    return result;
+doubly_linked_list result = this->split_before(position-1);    return result;
 }
 
 // Create two lists, one starting at position_from and ending with position_to and return that list
 // Merge the beginning of the original list with the end of the original list and retain it
 doubly_linked_list doubly_linked_list::split_set(unsigned position_from, unsigned position_to) {
-
-    unsigned i,k=0;
+unsigned i,k=0;
     std::vector <unsigned> values(position_to-position_from);
     node *original_end_first;
     node *original_end_second;
@@ -335,14 +319,13 @@ doubly_linked_list doubly_linked_list::split_set(unsigned position_from, unsigne
     doubly_linked_list result(values);
     original_end_second = temp->next;
     original_end_first->next = original_end_second;
-    original_end_second->prev = original_end_first;
-    return result;
+    original_end_second->prev = original_end_first;    return result;
 }
 
-// Swap two nodes in the list. USE POINTERS. Do not just swap the values!
-void doubly_linked_list::swap(unsigned position1, unsigned position2) {
+    // Swap two nodes in the list. USE POINTERS. Do not just swap the values!
+    void doubly_linked_list::swap(unsigned position1, unsigned position2) {
 
-    node *temp_position1=head;
+node *temp_position1=head;
     node *temp_position2=head;
     node *before_position1;
     node *after_position1;
@@ -363,12 +346,11 @@ void doubly_linked_list::swap(unsigned position1, unsigned position2) {
     temp_position1->next = after_position2;
     temp_position1->prev = before_position2;
     after_position2->prev = temp_position1;
-    before_position2->next = temp_position1;
-}
+    before_position2->next = temp_position1;}
 
-// Swap two sets of cards. The sets are inclusive. USE POINTERS!
-void doubly_linked_list::swap_set(unsigned position1_from, unsigned position1_to, unsigned position2_from,
-                                  unsigned position2_to) {
+    // Swap two sets of cards. The sets are inclusive. USE POINTERS!
+    void doubly_linked_list::swap_set(unsigned position1_from, unsigned position1_to, unsigned position2_from,
+                                      unsigned position2_to) {
     unsigned i;
     node *temp_position1_from,*temp_position1_to,*temp_position1_from_before,*temp_position1_to_after;
     node *temp_position2_from,*temp_position2_to,*temp_position2_from_before,*temp_position2_to_after;
@@ -402,11 +384,11 @@ void doubly_linked_list::swap_set(unsigned position1_from, unsigned position1_to
     temp_position1_to->next = temp_position2_to_after;
     temp_position2_to_after->prev = temp_position1_to;
 
-}
+    }
 
 // Overload operator=
 doubly_linked_list &doubly_linked_list::operator=(const doubly_linked_list &RHS) {
-    std::vector <unsigned> values(RHS.size);
+std::vector <unsigned> values(RHS.size);
     node *temp = RHS.head;
     for(int i=0;temp;i++)
     {
@@ -414,13 +396,12 @@ doubly_linked_list &doubly_linked_list::operator=(const doubly_linked_list &RHS)
         temp = temp->next;
     }
     doubly_linked_list result(values);
-    this->head = result.head;
-    return *this;
+    this->head = result.head;    return *this;
 }
 
 // Append the rhs to the end of the this list
 doubly_linked_list &doubly_linked_list::operator+=(const doubly_linked_list &RHS) {
-    std::vector <unsigned> values(this->size + RHS.size);
+std::vector <unsigned> values(this->size + RHS.size);
     node *temp = this->head;
     int i;
     for(i=0;temp;i++)
@@ -436,16 +417,42 @@ doubly_linked_list &doubly_linked_list::operator+=(const doubly_linked_list &RHS
         i++;
     }
     doubly_linked_list result(values);
-    this->head = result.head;
-    return *this;
+    this->head = result.head;    return *this;
 }
 
-unsigned doubly_linked_list::get_size() {
-    return size;
-}
+    unsigned doubly_linked_list::get_size() {
+        return size;
+    }
 
-bool doubly_linked_list::is_empty() {
-    return !size;
+    bool doubly_linked_list::is_empty() {
+        return !size;
+    }
+
+    bool doubly_linked_list::operator==(const doubly_linked_list &rhs) const {
+        node * iterL=head, * iterR = rhs.head;
+        while(iterL!= nullptr && iterR!= nullptr){
+            if (iterL->data != iterR->data)
+                return false;
+            iterL = iterL->next;
+            iterR = iterR->next;
+        }
+        return iterL == nullptr && iterR == nullptr;
+    }
+
+    std::string doubly_linked_list::to_string() {
+        if(!head) return "";
+        else {
+            std::string output = "";
+            output += std::to_string(head->data);
+            node *to_return = head->next;
+            while (to_return) {
+                output += ", ";
+                output += std::to_string(to_return->data);
+                to_return = to_return->next;
+            }
+            return output;
+        }
+    }
 }
 void doubly_linked_list :: print()
 {

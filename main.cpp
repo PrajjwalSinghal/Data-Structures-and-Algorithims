@@ -11,8 +11,8 @@ int main() {
     values[2] = 6;
     values[3] = 6;
     values[4] = 6;
-    doubly_linked_list d1(values);
-    //cout<<d1.get_size();
+    lab6::doubly_linked_list d1(values);
+    cout<<d1.get_size();
     d1.print();
     return 0;
 }
