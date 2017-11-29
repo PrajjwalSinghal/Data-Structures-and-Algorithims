@@ -91,19 +91,18 @@ namespace lab6 {
         tail = head = new node(input);
         size = 1;
         head->prev = nullptr;
-        head->next = nullptr;
+        tail->next = nullptr;
     }
 
     // Default destructor
     doubly_linked_list::~doubly_linked_list() {
         node *temp;
         temp = head;
-        size = 0;
-        while (is_empty()) {
+        while (!is_empty()) {
             head = head->next;
             delete temp;
             temp = head;
-
+            size--;
         }
 
     }
@@ -111,12 +110,12 @@ namespace lab6 {
 // return the value inside of the node located at position
     unsigned doubly_linked_list::get_data(unsigned position) {
         unsigned return_value = 0;
-        if (position >= size) {
+        if (position >= size || position < 0) {
             std::cout << "invalid size::" << std::endl;
         } else {
             node *temp;
             temp = head;
-            for (unsigned i = 0; i < position; i++)
+            for (unsigned i = 0; i < position ; i++)
                 temp = temp->next;
             return_value = temp->data;
         }
@@ -145,19 +144,36 @@ namespace lab6 {
     // Add a value to the end of the list
     void doubly_linked_list::append(unsigned data) {
 
-        node *temp;
-        temp = new node(data);
-        temp->next = nullptr;
-        temp->prev = tail;
-        tail->next = temp;
-        tail = temp;
+        if(head== nullptr){
+            head = tail = new node(data);
+            size++;
+        }
+        else{
+            node *temp;
+            temp = new node(data);
+            temp->next = nullptr;
+            temp->prev = tail;
+            tail->next = temp;
+            tail = temp;
+            size++;
+        }
+
     }
 
     // Merge two lists together in place, placing the input list at the end of this list
     void doubly_linked_list::merge(doubly_linked_list rhs) {
 
-        if(rhs.head!= nullptr)
+        if(rhs.head==this->head)
         {
+            doubly_linked_list temp(rhs);
+            this->tail->next = temp.head;
+            temp.head->prev = this->tail;
+            this->tail = temp.tail;
+            size = size + size;
+        }
+        else if(rhs.head != nullptr)
+        {
+            size+=rhs.get_size();
             this->tail->next = rhs.head;
             rhs.head->prev = this->tail;
             this->tail = rhs.tail;
@@ -201,10 +217,11 @@ namespace lab6 {
     // Insert a node before the node located at position
     void doubly_linked_list::insert_before(unsigned position, unsigned data) {
 
-        if (position >= size) {
+        if (position >= size || position < 0) {
             std::cout << "Wrong position entered";
         } else {
-            node *temp = head;
+            node *temp;
+            temp = head;
             for (unsigned i = 0; i < position - 1; i++)
                 temp = temp->next;
             node *temp1 = new node(data);
@@ -218,31 +235,57 @@ namespace lab6 {
 
     // Insert a node after the node located at position
     void doubly_linked_list::insert_after(unsigned position, unsigned data) {
-
+        /*
         if (position == (size - 1))
             append(data);
         else {
             position++;
             insert_before(position, data);
         }
+        */
+        if (position >= size || position < 0) {
+            std::cout << "Wrong position entered";
+        } else {
+            node *temp;
+            temp = head;
+            for (unsigned i = 0; i < position; i++)
+                temp = temp->next;
+            node *temp1 = new node(data);
+            node *temp2 = temp->next;
+            temp1->prev = temp;
+            temp1->next = temp2;
+            temp2->prev = temp1;
+            temp->next = temp1;
+        }
     }
 
     // Remove the node located at position from the linked list
     void doubly_linked_list::remove(unsigned position) {
-        node *temp_remove_node = head;
-        for (unsigned i = 0; i < position; i++)
+        if (position >= size || position < 0)
+        {
+            std::cout << "Wrong position entered";
+        }
+        else
+        {
+            node *temp_remove_node;
+            temp_remove_node = head;
+            for (unsigned i = 0; i < position; i++)
             temp_remove_node = temp_remove_node->next;
-        node *temp_previous = temp_remove_node->prev;
-        node *temp_after = temp_remove_node->next;
-        temp_previous->next = temp_after;
-        temp_after->prev = temp_previous;
-        delete temp_remove_node;
-        size--;
+            node *temp_previous = temp_remove_node->prev;
+            node *temp_after = temp_remove_node->next;
+            temp_previous->next = temp_after;
+            temp_after->prev = temp_previous;
+            delete temp_remove_node;
+            size--;
+        }
+
     }
 
 // Split the list with the node being split on being included in the returned list
     doubly_linked_list doubly_linked_list::split_before(unsigned position) {
-        node *temp = head;
+        /*
+        node *temp;
+        temp = head;
         std::vector<unsigned> values(position);
         if (position >= size) {
             std::cout << "Wrong size entered";
@@ -266,19 +309,65 @@ namespace lab6 {
             size = size - result.get_size();
             return result;
         }
+        */
+        if(position>=size || position<0)
+        {
+            std::cout<<"Wrong position entered:";
+            return *this;
+        }
+        else
+        {
+            doubly_linked_list return_list;
+            return_list.tail = this->tail;
+            node *temp;
+            temp = this->head;
+            for(int i=0;i<position;i++)
+                temp = temp->next;
+            return_list.head = temp;
+            temp->prev->next = nullptr;
+            return_list.head->prev = nullptr;
+            return_list.size = size-position;
+            size = position;
+            return return_list;
+        }
+
+
     }
 
 // Split the list with the node being split on being included in the retained list
     doubly_linked_list doubly_linked_list::split_after(unsigned position) {
+        /*
         doubly_linked_list result = this->split_before(position - 1);
         return result;
+         */
+        if(position>=size || position<0)
+        {
+            std::cout<<"Wrong position entered:";
+            return *this;
+        }
+        else
+        {
+            doubly_linked_list return_list;
+            return_list.tail = this->tail;
+            node *temp;
+            temp = this->head;
+            for(int i=0;i<position+1;i++)
+                temp = temp->next;
+            return_list.head = temp;
+            temp->prev->next = nullptr;
+            return_list.head->prev = nullptr;
+            return_list.size = (size - position) - 1;
+            size = position + 1;
+            return return_list;
+        }
     }
 
 // Create two lists, one starting at position_from and ending with position_to and return that list
 // Merge the beginning of the original list with the end of the original list and retain it
     doubly_linked_list doubly_linked_list::split_set(unsigned position_from, unsigned position_to) {
+        /*
         unsigned i, k = 0;
-        std::vector<unsigned> values(position_to - position_from);
+        std::vector<unsigned> values(position_to - position_from+1);
         node *original_end_first;
         node *original_end_second;
         node *temp = head;
@@ -296,6 +385,33 @@ namespace lab6 {
         original_end_first->next = original_end_second;
         original_end_second->prev = original_end_first;
         return result;
+        */
+       if(position_from>=size || position_from<0||position_to>=size || position_to<0)
+       {
+           std::cout<<"Wrong position entered:";
+           return *this;
+       }
+        else
+       {
+           node *temp1,*temp2;
+           temp1 = head;
+           temp2 = head;
+           for(int i=0;i<position_from;i++)
+               temp1 = temp1->next;
+           for(int i=0;i<position_to;i++)
+               temp2 = temp2->next;
+           temp1->prev->next = temp2->next;
+           temp2->next->prev = temp1->prev;
+           temp1->prev = nullptr;
+           temp2->next = nullptr;
+           doubly_linked_list return_list;
+           return_list.head = temp1;
+           return_list.tail = temp2;
+           return_list.size = position_to - position_from + 1;
+           size = size - return_list.size;
+           return return_list;
+       }
+
     }
 
     // Swap two nodes in the list. USE POINTERS. Do not just swap the values!
@@ -365,14 +481,18 @@ namespace lab6 {
 
 // Overload operator=
     doubly_linked_list &doubly_linked_list::operator=(const doubly_linked_list &RHS) {
-        std::vector<unsigned> values(RHS.size);
-        node *temp = RHS.head;
-        for (int i = 0; temp; i++) {
-            values[i] = temp->data;
-            temp = temp->next;
+        if(RHS.size!=0)
+        {
+            std::vector<unsigned> values(RHS.size);
+            node *temp = RHS.head;
+            for (int i = 0; temp; i++) {
+                values[i] = temp->data;
+                temp = temp->next;
+            }
+            doubly_linked_list result(values);
+            this->head = result.head;
+            this->size = result.get_size();
         }
-        doubly_linked_list result(values);
-        this->head = result.head;
         return *this;
     }
 
