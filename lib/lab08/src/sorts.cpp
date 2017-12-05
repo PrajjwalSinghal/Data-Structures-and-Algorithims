@@ -1,6 +1,6 @@
 #include "sorts.h"
-lab6::node *partition(lab6::doubly_linked_list working_list,lab6::node *start, lab6::node *end );
-void quicksort(lab6::doubly_linked_list L,lab6::node *start,lab6::node *end);
+lab6::node *partition(lab6::node *start, lab6::node *end );
+void quicksort(lab6::node *start,lab6::node *end);
 int getMax(lab6::node *temp)
 {
     unsigned max;
@@ -275,28 +275,30 @@ lab6::doubly_linked_list sorts::merge_sort(lab6::doubly_linked_list input) {
 lab6::doubly_linked_list sorts::quick_sort(lab6::doubly_linked_list input) {
 
     lab6::doubly_linked_list working_list = input;
-    quicksort(working_list,working_list.get_head(),working_list.get_tail());
+    quicksort(working_list.get_head(),working_list.get_tail());
     return working_list;
 }
 
-void quicksort(lab6::doubly_linked_list working_list,lab6::node *start,lab6::node *end)
+void quicksort(lab6::node *start,lab6::node *end)
 {
     if(start == end || start == nullptr || end == nullptr)
         return;
     lab6:: node *pIndex;
-    pIndex = partition(working_list,start,end);
+    pIndex = partition(start,end);
     if(pIndex== nullptr)
         return;
-    quicksort(working_list,start,pIndex->prev);
-    quicksort(working_list,pIndex->next,end);
+    if(pIndex!=start)
+        quicksort(start,pIndex->prev);
+    if(pIndex!=end)
+        quicksort(pIndex->next,end);
 }
-lab6::node *partition(lab6::doubly_linked_list working_list,lab6::node *start, lab6::node *end)
+lab6::node *partition(lab6::node *start, lab6::node *end)
 {
     lab6::node *pivot;
     pivot = end;
     lab6::node *pIndex = start;
     lab6::node *i=start;
-    for(;i!=end && i!= nullptr;i = i->next)
+    for(;i!=end && i!= pivot;i = i->next)
     {
         if(i->data <= pivot->data)
         {

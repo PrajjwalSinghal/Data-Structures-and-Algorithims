@@ -177,7 +177,7 @@ TEST_F(Lab8_Tests, merge_sort){
     EXPECT_EQ(sorted, sorting_machine.merge_sort(*unsorted_list).to_string());
 }
 
-TEST_F(Lab8_Tests, DISABLED_quick_sort){
+TEST_F(Lab8_Tests, quick_sort){
     std::string small_sorted = "1, 2, 3, 4, 5, 6, 7";
     EXPECT_EQ(small_sorted, sorting_machine.quick_sort(*small_unsorted_list).to_string());
 
