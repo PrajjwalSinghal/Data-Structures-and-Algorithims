@@ -252,21 +252,21 @@ void print_recursive(node *root,int data,std::string &return_string)
     else if(data < root->data)
     {
         return_string = return_string + std::to_string(root->data) + " -> ";
-        //std::cout<<root->data<<" -> ";
+
         print_recursive(root->left,data,return_string);
     }
     else if(data > root->data)
     {
         return_string = return_string + std::to_string(root->data) + " -> ";
-        //std::cout<<root->data<<" -> ";
+
         print_recursive(root->right,data,return_string);
     }
     else
     {
         return_string = return_string + std::to_string(root->data) + "\n";
-        //std::cout<<root->data<<"\n";
+
     }
-    //return root->data;
+
 }
 unsigned find_size_recursive(node *root)
 {

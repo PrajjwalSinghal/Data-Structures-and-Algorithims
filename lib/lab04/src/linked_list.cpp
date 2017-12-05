@@ -24,7 +24,7 @@ namespace lab4{
             temp = temp->next;
             temp->next = nullptr;
         }
-        //head= new node(values, length);
+
     }
 
     // Default destructor. Should run through each of the nodes and delete them

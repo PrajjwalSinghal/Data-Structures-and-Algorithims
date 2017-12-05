@@ -132,10 +132,6 @@ namespace lab5 {
 
     int expression::calculate_postfix() {
         stack result;
-        //queue temp;
-        //cout<<postfix.queueSize();
-        //cout<<temp.queueSize();
-        //temp = postfix;
         queue temp2;
         temp2=postfix;
         string final_answer;
@@ -150,7 +146,7 @@ namespace lab5 {
                 result.push(temp_element);
             }
             else
-            {   //stringstream geek(s);
+            {
                 int answer=0;
                 string upper="",lower="";
                 upper = result.top();
@@ -164,15 +160,12 @@ namespace lab5 {
         }
         final_answer = result.top();
         result.pop();
-        //stringstream geek(final_answer);
         int answer=0;
-        //geek>>answer;
         answer = atoi(final_answer.c_str());
         return answer;
     }
 
     void expression::print_infix() {
-        //queue temp = infix;
         while(!infix.isEmpty())
         {
             std::cout<<infix.top();

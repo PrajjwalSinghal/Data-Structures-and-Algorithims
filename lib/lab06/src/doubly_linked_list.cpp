@@ -97,14 +97,7 @@ namespace lab6 {
 
     // Default destructor
     doubly_linked_list::~doubly_linked_list() {
-//        node *temp;
-//        temp = head;
-//        while (!is_empty()) {
-//            head = head->next;
-//            delete temp;
-//            temp = head;
-//            size--;
-//        }
+
         while(!is_empty())
             remove((0));
 
@@ -228,14 +221,7 @@ namespace lab6 {
 
     // Insert a node after the node located at position
     void doubly_linked_list::insert_after(unsigned position, unsigned data) {
-        /*
-        if (position == (size - 1))
-            append(data);
-        else {
-            position++;
-            insert_before(position, data);
-        }
-        */
+
         if (position >= size || position < 0) {
             std::cout << "Wrong position entered";
         } else {
@@ -290,33 +276,7 @@ namespace lab6 {
 
 // Split the list with the node being split on being included in the returned list
     doubly_linked_list doubly_linked_list::split_before(unsigned position) {
-        /*
-        node *temp;
-        temp = head;
-        std::vector<unsigned> values(position);
-        if (position >= size) {
-            std::cout << "Wrong size entered";
-            doubly_linked_list result;
-            return result;
-        } else {
-            for (unsigned i = 0; i < position; i++) {
-                values[i] = temp->data;
-                temp = temp->next;
-            }
 
-            doubly_linked_list result(values);
-            node *temp1 = temp;
-            temp = temp->next;
-            temp1->next = nullptr;
-            temp->prev = nullptr;
-            // temp1 = head;
-            // while(temp1)
-            //    remove(0);
-            head = temp;
-            size = size - result.get_size();
-            return result;
-        }
-        */
         if(position>=size || position<0)
         {
             std::cout<<"Wrong position entered:";
@@ -344,10 +304,7 @@ namespace lab6 {
 
 // Split the list with the node being split on being included in the retained list
     doubly_linked_list doubly_linked_list::split_after(unsigned position) {
-        /*
-        doubly_linked_list result = this->split_before(position - 1);
-        return result;
-         */
+
         if(position>=size || position<0)
         {
             std::cout<<"Wrong position entered:";
@@ -373,27 +330,7 @@ namespace lab6 {
 // Create two lists, one starting at position_from and ending with position_to and return that list
 // Merge the beginning of the original list with the end of the original list and retain it
     doubly_linked_list doubly_linked_list::split_set(unsigned position_from, unsigned position_to) {
-        /*
-        unsigned i, k = 0;
-        std::vector<unsigned> values(position_to - position_from+1);
-        node *original_end_first;
-        node *original_end_second;
-        node *temp = head;
-        for (i = 0; i < position_from; i++)
-            temp = temp->next;
-        original_end_first = temp->prev;
-        while (i < position_to) {
-            values[k] = temp->data;
-            k++;
-            i++;
-            temp = temp->next;
-        }
-        doubly_linked_list result(values);
-        original_end_second = temp->next;
-        original_end_first->next = original_end_second;
-        original_end_second->prev = original_end_first;
-        return result;
-        */
+
        if(position_from>=size || position_from<0||position_to>=size || position_to<0)
        {
            std::cout<<"Wrong position entered:";
@@ -457,39 +394,7 @@ namespace lab6 {
     // Swap two sets of cards. The sets are inclusive. USE POINTERS!
     void doubly_linked_list::swap_set(unsigned position1_from, unsigned position1_to, unsigned position2_from,
                                       unsigned position2_to) {
-       /*
-        unsigned i;
-        node *temp_position1_from, *temp_position1_to, *temp_position1_from_before, *temp_position1_to_after;
-        node *temp_position2_from, *temp_position2_to, *temp_position2_from_before, *temp_position2_to_after;
-        temp_position1_from = head;
-        temp_position2_from = head;
-        for (i = 0; i < position1_from; i++)
-            temp_position1_from = temp_position1_from->next;
-        temp_position1_to = temp_position1_from;
-        for (; i < position1_to; i++)
-            temp_position1_to = temp_position1_to->next;
-        temp_position1_from_before = temp_position1_from->prev;
-        temp_position1_to_after = temp_position1_to->next;
 
-        
-        for (i = 0; i < position2_from; i++)
-            temp_position2_from = temp_position2_from->next;
-        temp_position2_to = temp_position2_from;
-        for (; i < position2_to; i++)
-            temp_position2_to = temp_position2_to->next;
-        temp_position2_from_before = temp_position2_from->prev;
-        temp_position2_to_after = temp_position2_to->next;
-
-        temp_position2_from->prev = temp_position1_from_before;
-        temp_position1_from_before->next = temp_position2_from;
-        temp_position2_to->next = temp_position1_to_after;
-        temp_position1_to_after->prev = temp_position2_to;
-
-        temp_position1_from->prev = temp_position2_from_before;
-        temp_position2_from_before->next = temp_position1_from;
-        temp_position1_to->next = temp_position2_to_after;
-        temp_position2_to_after->prev = temp_position1_to;
-    */
         node *position1_start, *position1_end, *position2_start, *position2_end;
         position1_start = position1_end = position2_start = position2_end = head;
         if(position1_from >= size || position1_from < 0 || position1_to >= size || position1_to < 0
@@ -574,24 +479,7 @@ namespace lab6 {
 
 // Append the rhs to the end of the this list
     doubly_linked_list &doubly_linked_list::operator+=(const doubly_linked_list &RHS) {
-        /*
-        std::vector<unsigned> values(this->size + RHS.size);
-        node *temp = this->head;
-        int i;
-        for (i = 0; temp; i++) {
-            values[i] = temp->data;
-            temp = temp->next;
-        }
-        temp = RHS.head;
-        while (temp) {
-            values[i] = temp->data;
-            temp = temp->next;
-            i++;
-        }
-        doubly_linked_list result(values);
-        this->head = result.head;
-        return *this;
-        */
+
 
         if(RHS.head == nullptr)
             return *this;
