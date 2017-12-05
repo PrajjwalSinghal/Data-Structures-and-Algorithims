@@ -69,6 +69,19 @@ namespace lab5 {
         //step 2 create a new node with the incoming data variable, storing the address of this node in head pointer
         //step 3 update new nodes next pointer with the address stored in step 1
         //step 4 update size of stack variable
+        if(isEmpty())
+        {
+            head = new node(data);
+            size++;
+        }
+        else
+        {
+            node *temp1;
+            temp1 = new node(data);
+            temp1->next = head;
+            head = temp1;
+            size++;
+        }
     }
 
     void stack::pop() {
@@ -76,5 +89,17 @@ namespace lab5 {
         //step 2 update head with address of second node
         //step 3 delete node pointed to by address stored in step 1
         // step 4 update size of stack variable
+        if(isEmpty())
+        {
+            std::cout<<"Stack is empty::";
+        }
+        else
+        {
+            node *current;
+            current = head;
+            head = head->next;
+            delete current;
+            size--;
+        }
     }
 }

@@ -23,7 +23,8 @@ namespace lab6 {
         std::vector<unsigned> get_set(unsigned position_from, unsigned position_to);
         unsigned get_size();
         bool is_empty();
-
+        node* get_head(){return head;}
+        node* get_tail(){return tail;}
         void append(unsigned data);
         void merge(doubly_linked_list rhs);
         void insert_before(unsigned position, unsigned data);
@@ -40,7 +41,7 @@ namespace lab6 {
         doubly_linked_list operator+( doubly_linked_list& rhs );//returns list with *this appended to rhs does not alter *this or rhs
         doubly_linked_list &operator=(const doubly_linked_list& RHS);
         doubly_linked_list &operator+=(const doubly_linked_list& RHS);
-    void print();
+        void print();
         //Added and provided for you for lab 8
         bool operator==(const doubly_linked_list& rhs)const;
         std::string to_string();

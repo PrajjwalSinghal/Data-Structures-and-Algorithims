@@ -16,6 +16,7 @@ namespace lab4 {
         linked_list(int values[], int length);
 
         ~linked_list();
+        node *get_head(){return head;}
 
         bool append(int value);
 

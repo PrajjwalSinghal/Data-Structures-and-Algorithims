@@ -1,4 +1,5 @@
 #include "../inc/queue.h"
+#include<iostream>
 namespace lab5 {
     queue::queue() : head(nullptr), tail(nullptr), size(0) {}
 
@@ -71,6 +72,19 @@ namespace lab5 {
         //step 2 update next of node pointed to by tail with address of new node
         //step 3 update tail with address of new node
         //step 4 update size of stack variable
+        if(isEmpty())
+        {
+            head = tail = new node(data);
+            size++;
+        }
+        else
+        {
+            node *temp;
+            temp = new node(data);
+            tail->next = temp;
+            tail = temp;
+            size++;
+        }
     }
 
     void queue::dequeue() {
@@ -78,5 +92,19 @@ namespace lab5 {
         //step 2 update head with address of second node
         //step 3 delete node pointed to by address stored in step 1
         //step 4 update size of stack variable
+        if(isEmpty())
+        {
+            std::cout<<"Queue is empty";
+        }
+        else
+        {
+            node *temp;
+            temp = head;
+            if(head==tail)
+                tail=nullptr;
+            head = head->next;
+            delete temp;
+            size--;
+        }
     }
 }

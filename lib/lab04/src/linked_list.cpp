@@ -15,7 +15,16 @@ namespace lab4{
     // Default constructor for creating a linked list from a given integer array
     linked_list::linked_list(int values[], int length)
     {
-        head= new node(values, length);
+        this->head = new node(values[0]);
+        node *temp;
+        temp = this->head;
+        for(int i=1;i<length;i++)
+        {
+            temp->next = new node(values[i]);
+            temp = temp->next;
+            temp->next = nullptr;
+        }
+        //head= new node(values, length);
     }
 
     // Default destructor. Should run through each of the nodes and delete them

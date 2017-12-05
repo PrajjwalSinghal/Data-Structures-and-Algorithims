@@ -70,7 +70,7 @@ TEST_F(Lab06_Fixture,Split) {
     EXPECT_EQ(list3->get_data(0), 0);
 }
 
-TEST_F(Lab06_Fixture, DISABLED_Swap) {
+TEST_F(Lab06_Fixture, Swap) {
     list3->swap(3,6);
     EXPECT_EQ(list3->get_data(3),6);
     EXPECT_EQ(list3->get_data(6),3);

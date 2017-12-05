@@ -148,6 +148,50 @@ lab6::doubly_linked_list sorts::selection_sort(lab6::doubly_linked_list input, i
     return working_list;
 }
 
+lab6::doubly_linked_list sorts::cocktail_sort(lab6::doubly_linked_list input, int iterations) {
+    lab6::doubly_linked_list working_list = input;
+    lab6::node *current,*current_next,*current_prev;
+    current = working_list.get_head();
+    current_next = current->next;
+    for(int i=0;(i<iterations)  && (current_next != nullptr);i++)
+    {
+        do
+        {
+            if(current->data > current_next->data)
+            {
+                unsigned temp;
+                temp = current->data;
+                current->data = current_next->data;
+                current_next->data = temp;
+            }
+            current = current->next;
+            current_next = current_next->next;
+        }while(current_next != nullptr);
+
+        current = working_list.get_tail();
+        current = current->prev;
+        current_prev = current->prev;
+        do{
+            if(current->data < current_prev->data)
+            {
+                unsigned temp;
+                temp = current->data;
+                current->data = current_prev->data;
+                current_prev->data = temp;
+            }
+            current = current->prev;
+            current_prev = current->prev;
+        }while(current_prev!= nullptr);
+        current = working_list.get_head();
+        current_next = current->next;
+
+
+    }
+
+
+    return working_list;
+}
+
 lab6::doubly_linked_list sorts::bubble_sort(lab6::doubly_linked_list input, int iterations) {
     lab6::doubly_linked_list working_list = input;
     lab6::node *current,*current_next;
@@ -226,50 +270,7 @@ lab6::doubly_linked_list sorts::merge_sort(lab6::doubly_linked_list input) {
     return working_list;
 }
 
-lab6::doubly_linked_list sorts::cocktail_sort(lab6::doubly_linked_list input, int iterations) {
-    lab6::doubly_linked_list working_list = input;
-    lab6::node *start,*end,*max,*min,*temp,*temp_start;
-    start = working_list.get_head();
-    temp = start->next;
-    end = working_list.get_tail();
-    min = start;
-    max = start;
-    for(int i=0;i<iterations && start!=end;i++)
-    {
 
-        do{
-
-            if(max->data < temp->data)
-                max = temp;
-            temp = temp->next;
-        }while(temp!= nullptr);
-
-        unsigned swap_temp;
-        //SWAP MAX AT END
-        swap_temp = end->data;
-        end->data = max->data;
-        max->data = swap_temp;
-        do
-        {
-            if(min->data > temp_start->data)
-                min = temp_start;
-            temp_start = temp_start->next;
-        }while(temp_start!= nullptr);
-        // SWAP MINIMUM AT START
-        swap_temp = start->data;
-        start->data = min->data;
-        min->data = swap_temp;
-        //MOVE START FORWARD AND END BACKWARDS
-        start = start->next;
-        if(start == end)
-            break;
-        end = end->prev;
-        temp = start->next;
-        min = start;
-        max = start;
-    }
-    return working_list;
-}
 
 lab6::doubly_linked_list sorts::quick_sort(lab6::doubly_linked_list input) {
 
@@ -277,8 +278,6 @@ lab6::doubly_linked_list sorts::quick_sort(lab6::doubly_linked_list input) {
     quicksort(working_list,working_list.get_head(),working_list.get_tail());
     return working_list;
 }
-
-
 
 void quicksort(lab6::doubly_linked_list working_list,lab6::node *start,lab6::node *end)
 {
